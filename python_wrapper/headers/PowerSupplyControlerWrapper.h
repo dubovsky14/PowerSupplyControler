@@ -15,11 +15,11 @@ class PowerSupplyControlerWrapper {
 
         ~PowerSupplyControlerWrapper() = default;
 
-        void start_measurementWrapper(int sampling_interval_ms, int recorded_interval_ms)   {
+        void start_measurement(int sampling_interval_ms, int recorded_interval_ms)   {
             m_power_supply_controler->start_measurement(sampling_interval_ms, recorded_interval_ms);
         };
 
-        void stop_measurementWrapper()  {
+        void stop_measurement()  {
             m_power_supply_controler->stop_measurement();
         };
 
@@ -44,7 +44,7 @@ class PowerSupplyControlerWrapper {
         };
 
     private:
-        std::shared_ptr<std::ofstream> m_power_supply_controler = nullptr;
+        std::shared_ptr<PowerSupplyControler> m_power_supply_controler = nullptr;
         std::tuple<std::vector<int>, std::vector<float>, std::vector<float>> m_frozen_data;
 
 };
