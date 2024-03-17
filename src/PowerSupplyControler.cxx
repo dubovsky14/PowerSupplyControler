@@ -12,6 +12,11 @@ PowerSupplyControler::PowerSupplyControler(const string &output_file) {
     m_current.reserve(reserved_size);
 };
 
+PowerSupplyControler::~PowerSupplyControler() {
+    stop_measurement();
+    m_output_file->close();
+};
+
 void PowerSupplyControler::start_measurement(int sampling_interval_ms, int recorded_interval_ms) {
     if (m_measurement_thread != nullptr) {
         return;

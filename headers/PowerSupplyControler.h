@@ -13,6 +13,8 @@ class PowerSupplyControler {
     public:
         PowerSupplyControler(const std::string &output_file);
 
+        ~PowerSupplyControler();
+
         void start_measurement(int sampling_interval_ms, int recorded_interval_ms);
 
         void stop_measurement();
