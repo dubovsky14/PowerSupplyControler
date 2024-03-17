@@ -23,7 +23,7 @@ class PowerSupplyControlerWrapper {
             m_power_supply_controler->stop_measurement();
         };
 
-        std::tuple<std::vector<int>, std::vector<float>, std::vector<float>> get_data() {
+        std::tuple<std::vector<long long int>, std::vector<float>, std::vector<float>> get_data() {
             return m_power_supply_controler->get_data();
         };
 
@@ -31,7 +31,7 @@ class PowerSupplyControlerWrapper {
             m_frozen_data = m_power_supply_controler->get_data();
         };
 
-        std::vector<int> get_times() {
+        std::vector<long long int> get_times() {
             return std::get<0>(m_frozen_data);
         };
 
@@ -45,6 +45,6 @@ class PowerSupplyControlerWrapper {
 
     private:
         std::shared_ptr<PowerSupplyControler> m_power_supply_controler = nullptr;
-        std::tuple<std::vector<int>, std::vector<float>, std::vector<float>> m_frozen_data;
+        std::tuple<std::vector<long long int>, std::vector<float>, std::vector<float>> m_frozen_data;
 
 };

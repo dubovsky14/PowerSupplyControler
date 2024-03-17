@@ -19,6 +19,9 @@ BOOST_PYTHON_MODULE(PowerSupplyModule) {
     .def(boost::python::vector_indexing_suite<std::vector<int>>());
 
 
+    boost::python::class_<std::vector<long long int>>("LongLongIntVector")
+    .def(boost::python::vector_indexing_suite<std::vector<long long int>>());
+
     /**
      * @brief Python wrapper around FastFramesExecutor
      *

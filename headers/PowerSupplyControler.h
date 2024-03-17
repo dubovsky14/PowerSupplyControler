@@ -26,7 +26,7 @@ class PowerSupplyControler {
          * - a vector with the voltage in V
          * - a vector with the current in A
         */
-        std::tuple<std::vector<int>, std::vector<float>, std::vector<float>> get_data();
+        std::tuple<std::vector<long long int>, std::vector<float>, std::vector<float>> get_data();
 
 
     private:
@@ -34,7 +34,7 @@ class PowerSupplyControler {
         std::mutex                      m_mutex;
         bool                            m_measuring = false;
         std::unique_ptr<std::thread>    m_measurement_thread = nullptr;
-        std::vector<int>    m_time;
+        std::vector<long long int>    m_time;
         std::vector<float>  m_voltage;
         std::vector<float>  m_current;
 

@@ -67,7 +67,7 @@ void PowerSupplyControler::stop_measurement() {
     }
 };
 
-tuple<vector<int>, vector<float>, vector<float>> PowerSupplyControler::get_data() {
+tuple<vector<long long int>, vector<float>, vector<float>> PowerSupplyControler::get_data() {
     scoped_lock lock(m_mutex);
     return make_tuple(m_time, m_voltage, m_current);
 };
