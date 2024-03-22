@@ -44,14 +44,16 @@ void PowerSupplyControler::start_measurement(int sampling_interval_ms, int recor
                 if (n_values == 0) {
                     continue;
                 }
-                scoped_lock lock(m_mutex);
-                m_time.push_back(current_time);
-                m_voltage.push_back(voltage / n_values);
-                m_current.push_back(current / n_values);
-                *m_output_file << current_time << ", " << voltage / n_values << ", " << current / n_values << endl;
-                voltage = 0.0;
-                current = 0.0;
-                n_values = 0;
+                {
+                    scoped_lock lock(m_mutex);
+                    m_time.push_back(current_time);
+                    m_voltage.push_back(voltage / n_values);
+                    m_current.push_back(current / n_values);
+                    *m_output_file << current_time << ", " << voltage / n_values << ", " << current / n_values << endl;
+                    voltage = 0.0;
+                    current = 0.0;
+                    n_values = 0;
+                }
             }
         }
     };
@@ -69,7 +71,8 @@ void PowerSupplyControler::stop_measurement() {
 
 tuple<vector<long long int>, vector<float>, vector<float>> PowerSupplyControler::get_data() {
     scoped_lock lock(m_mutex);
-    return make_tuple(m_time, m_voltage, m_current);
+    auto result = make_tuple(m_time, m_voltage, m_current);
+    return result;
 };
 
 void PowerSupplyControler::get_voltage_and_current(float *voltage, float *current)    {
