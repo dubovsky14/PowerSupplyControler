@@ -37,7 +37,9 @@ def show_index():
     time0 = data_times[0] if len(data_times) > 0 else 0
     times_s = [int((x - time0)/1000) for x in data_times]
     Ah = csv_reader.calculate_Ah(data_currents, data_times)
+    print("Time0: ", time0)
     context =   {
+                    "measurement_start" : datetime.datetime.fromtimestamp(int(time0/1000)).strftime('%Y-%m-%d %H:%M:%S'),
                     "times" : times_s,
                     "voltages" : data_voltages,
                     "currents" : data_currents,

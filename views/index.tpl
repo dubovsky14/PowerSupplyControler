@@ -5,6 +5,7 @@
 <center>
 
 <div class="container" style="padding-bottom: 3rem">
+    Start of the measurement: {{measurement_start}} <br>
     Charge Total: {{Ah}} Ah
 </div>
 
