@@ -15,14 +15,16 @@ path.append(main_dir + "/bin/")
 #from PowerSupplyModule import PowerSupplyControlerWrapper
 from PowerSupplyControler import PowerSupplyControler
 from DataCSVReader import DataCSVReader
+from other_functions import resample_data
 import time, datetime
+
 
 time_string = datetime.datetime.fromtimestamp(int(time.time())).strftime('%Y-%m-%d_%H:%M:%S')
 log_address = "logs/log_" + time_string + ".txt"
-
 power_supply = PowerSupplyControler(log_address)
 power_supply.start_measurement(100,1000)
 
+#log_address = "logs/log_test.txt"
 app = Bottle()
 
 @app.route('/')
@@ -32,10 +34,16 @@ def show_index():
     csv_reader = DataCSVReader(log_address)
     data_times, data_voltages, data_currents = csv_reader.get_data()
 
+    n_resapled_points = 100
+    if request.query.n_points:
+        n_resapled_points = int(request.query.n_points)
+
     time0 = data_times[0] if len(data_times) > 0 else 0
-    times_s = [int((x - time0)/1000) for x in data_times]
     Ah = csv_reader.calculate_Ah(data_currents, data_times)
     Ah = round(Ah, 3)
+
+    data_times, data_voltages, data_currents = resample_data(n_resapled_points, data_times, data_voltages, data_currents)
+    times_s = [int((x - time0)/1000) for x in data_times]
     context =   {
                     "measurement_start" : datetime.datetime.fromtimestamp(int(time0/1000)).strftime('%Y-%m-%d %H:%M:%S'),
                     "times" : times_s,
