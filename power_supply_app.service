@@ -5,9 +5,9 @@ Description=uWSGI instance to serve simple dynamic plugin
 After=network.target
 
 [Service]
-User=plate_solver
+User=root
 WorkingDirectory=/home/plate_solver/PowerSupplyControler/
-ExecStart=/usr/local/bin/uwsgi --ini power_supply_app.ini --honour-stdin
+ExecStart=/usr/local/bin/uwsgi --http-socket :9000 --plugin python3 --wsgi-file python/run_localhost.py --enable-threads --master
 Restart=on-failure
 KillSignal=SIGQUIT
 Type=notify
