@@ -31,7 +31,11 @@
 <button id="redirect-button">Confirm</button>
 <script src="js/interval_selector.js"></script>
 
+<p>
+<a href={{log_address}}> Download data as csv </a>
+
 </center>
+
 
 
 

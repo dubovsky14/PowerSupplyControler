@@ -68,9 +68,16 @@ def show_index():
                     "time_start" : int((interval_start - time0)/1000),
                     "time_end" : int((interval_end - time0)/1000),
                     "sampling_n_points" : n_resapled_points,
+                    "log_address" : log_address,
                 }
     return context
 
 @app.route('/js/<filename>')
 def server_static(filename):
     return static_file(filename, root=main_dir + '/js/')
+
+@app.route('/logs/<filename>')
+def serve_plugin_txt_file(filename):
+    with open("logs/" + filename ) as f:
+        stat_art = f.read()
+    return stat_art
