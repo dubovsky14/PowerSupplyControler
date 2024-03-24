@@ -24,27 +24,33 @@ let chart = new Chart(ctx, {
     data: {
         labels: time,
         datasets: [{
-            label: 'Voltage [V]',
+            label: 'Voltage [V] (left)',
             data: voltage,
+            yAxisID: 'y-axis-voltage',
             borderColor: 'rgba(255, 99, 132, 1)',
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderWidth: 1,
         }, {
-            label: 'Current [A]',
+            label: 'Current [A] (right)',
             data: current,
+            //yAxisID: 'y-axis-current',
             borderColor: 'rgba(54, 162, 235, 1)',
             backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderWidth: 1,
         }]
     },
     options: {
+        responsive: true,
         scales: {
             x: {
                 title: {
                     display: true,
-                    text: 'Time [s]'
-                }
+                    text: 'Time [s]',
+                },
             },
             y: {
-                beginAtZero: true
+                position: 'right',
+                grid: { display: false, color: 'rgba(54, 162, 235, 1)' }
             }
         }
     }

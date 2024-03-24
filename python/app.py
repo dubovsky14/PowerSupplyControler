@@ -15,7 +15,7 @@ path.append(main_dir + "/bin/")
 #from PowerSupplyModule import PowerSupplyControlerWrapper
 from PowerSupplyControler import PowerSupplyControler
 from DataCSVReader import DataCSVReader
-from other_functions import resample_data
+from other_functions import resample_data, keep_only_data_in_interval, get_start_and_end_of_interval
 import time, datetime
 
 
@@ -33,12 +33,25 @@ def show_index():
     # uwsgi does something very weird with memory access in multi-threading code, reading it from a text file is the only way to get the data
     csv_reader = DataCSVReader(log_address)
     data_times, data_voltages, data_currents = csv_reader.get_data()
+    time0 = data_times[0] if len(data_times) > 0 else 0
 
     n_resapled_points = 100
     if request.query.n_points:
         n_resapled_points = int(request.query.n_points)
 
-    time0 = data_times[0] if len(data_times) > 0 else 0
+    interval_start = None
+    if request.query.interval_start:
+        interval_start = time0 + 1000*int(request.query.interval_start)
+
+    interval_end = None
+    if request.query.interval_end:
+        interval_end = time0 + 1000*int(request.query.interval_end)
+
+    interval_start, interval_end = get_start_and_end_of_interval(data_times, interval_start, interval_end)
+
+    data_times, data_voltages, data_currents = keep_only_data_in_interval(interval_start, interval_end, data_times, data_voltages, data_currents)
+
+
     Ah = csv_reader.calculate_Ah(data_currents, data_times)
     Ah = round(Ah, 3)
 
@@ -49,7 +62,9 @@ def show_index():
                     "times" : times_s,
                     "voltages" : data_voltages,
                     "currents" : data_currents,
-                    "Ah" : Ah
+                    "Ah" : Ah,
+                    "time_start" : int(interval_start/1000),
+                    "time_end" : int(interval_end/1000),
                 }
     return context
 
