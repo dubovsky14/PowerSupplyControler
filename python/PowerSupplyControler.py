@@ -10,6 +10,20 @@ class PowerSupplyControler:
         self.sampling_interval_ms = 100
         self.recorded_interval_ms = 1000
 
+        self.running_on_raspberry = False
+        try:
+            import board
+            import busio
+            import adafruit_ads1x15.ads1115 as ADS
+            from adafruit_ads1x15.analog_in import AnalogIn
+
+            i2c = busio.I2C(board.SCL, board.SDA)
+            self.channel_voltage = AnalogIn(i2c, ADS.P0)
+            self.channel_current = AnalogIn(i2c, ADS.P1)
+            self.running_on_raspberry = True
+        except:
+            pass
+
     def _measure_and_save_to_file(self):
         n_values = 0
         voltage = 0.
@@ -31,9 +45,12 @@ class PowerSupplyControler:
                 next_record_time += self.recorded_interval_ms / 1000
 
     def measure(self) -> tuple[float,float]:
-        a0 = 0
-        a1 = 0
-        return a0*self.a0_to_voltage_const, a1*self.a1_to_currenct_const
+        if self.running_on_raspberry:
+            a0 = self.channel_voltage.voltage
+            a1 = self.channel_current.voltage
+            return a0*self.a0_to_voltage_const, a1*self.a1_to_currenct_const
+        else:
+            return 0., 0.
 
     def start_measurement(self, sampling_interval_ms : int = None, recorded_interval_ms : int = None) -> None:
         if sampling_interval_ms is not None:
