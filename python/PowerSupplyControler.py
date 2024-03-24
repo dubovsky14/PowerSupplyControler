@@ -22,8 +22,9 @@ class PowerSupplyControler:
             self.channel_voltage = AnalogIn(ads, ADS.P0)
             self.channel_current = AnalogIn(ads, ADS.P1)
             self.running_on_raspberry = True
-        except:
-            pass
+        except Exception as e:
+            print("Failed to initialize measurement on Raspberry Pi. Maybe you are running on a different platform?")
+            print(e)
 
     def _measure_and_save_to_file(self):
         n_values = 0
@@ -38,7 +39,7 @@ class PowerSupplyControler:
             voltage += voltage_now
             current += current_now
             if current_time > next_record_time:
-                self.log_file.write(f"{current_time}, {voltage/n_values}, {current/n_values}\n")
+                self.log_file.write(f"{int(current_time*1000)}, {voltage/n_values}, {current/n_values}\n")
                 self.log_file.flush()
                 n_values = 0
                 voltage = 0.

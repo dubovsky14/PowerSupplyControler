@@ -24,12 +24,12 @@ let chart = new Chart(ctx, {
     data: {
         labels: time,
         datasets: [{
-            label: 'Voltage',
+            label: 'Voltage [V]',
             data: voltage,
             borderColor: 'rgba(255, 99, 132, 1)',
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
         }, {
-            label: 'Current',
+            label: 'Current [A]',
             data: current,
             borderColor: 'rgba(54, 162, 235, 1)',
             backgroundColor: 'rgba(54, 162, 235, 0.2)',
