@@ -9,16 +9,29 @@
 <div style="display:none" id="plotting_data_render_voltages">{{ voltages }}</div>
 <div style="display:none" id="plotting_data_render_currents">{{ currents }}</div>
 
-<div class="container" style="padding-bottom: 3rem">
-    Start of the measurement: {{measurement_start}} <br>
-    Charge Total: {{Ah}} Ah
+<div class="container" style="padding-bottom: 2rem">
+    <b>Start of the measurement:</b> {{measurement_start}} <br>
+    <b>Current voltage:</b> {{current_voltage}} V <br>
+    <b>Charge Total:</b> {{Ah}} Ah
 </div>
 
 <canvas id="myChart"></canvas>
+<script src="js/plot_chart.js"></script>
+
+<label for="interval_start">Start time:</label>
+<input type="number" id="interval_start" name="interval_start" value="{{time_start}}"/>
+
+<label for="interval_end">End time:</label>
+<input type="number" id="interval_end" name="interval_end" value="{{time_end}}"/>
+
+<label for="n_points">N points:</label>
+<input type="number" id="n_points" name="n_points" value="{{sampling_n_points}}"/>
+
+<p>
+<button id="redirect-button">Confirm</button>
+<script src="js/interval_selector.js"></script>
 
 </center>
-
-<script src="js/plot_chart.js"></script>
 
 
 

@@ -33,6 +33,7 @@ def show_index():
     # uwsgi does something very weird with memory access in multi-threading code, reading it from a text file is the only way to get the data
     csv_reader = DataCSVReader(log_address)
     data_times, data_voltages, data_currents = csv_reader.get_data()
+    current_voltage = data_voltages[-1] if len(data_voltages) > 0 else 0
     time0 = data_times[0] if len(data_times) > 0 else 0
 
     n_resapled_points = 100
@@ -62,9 +63,11 @@ def show_index():
                     "times" : times_s,
                     "voltages" : data_voltages,
                     "currents" : data_currents,
+                    "current_voltage": round(current_voltage,2),
                     "Ah" : Ah,
-                    "time_start" : int(interval_start/1000),
-                    "time_end" : int(interval_end/1000),
+                    "time_start" : int((interval_start - time0)/1000),
+                    "time_end" : int((interval_end - time0)/1000),
+                    "sampling_n_points" : n_resapled_points,
                 }
     return context
 
