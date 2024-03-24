@@ -18,8 +18,9 @@ class PowerSupplyControler:
             from adafruit_ads1x15.analog_in import AnalogIn
 
             i2c = busio.I2C(board.SCL, board.SDA)
-            self.channel_voltage = AnalogIn(i2c, ADS.P0)
-            self.channel_current = AnalogIn(i2c, ADS.P1)
+            ads = ADS.ADS1115(i2c)
+            self.channel_voltage = AnalogIn(ads, ADS.P0)
+            self.channel_current = AnalogIn(ads, ADS.P1)
             self.running_on_raspberry = True
         except:
             pass
