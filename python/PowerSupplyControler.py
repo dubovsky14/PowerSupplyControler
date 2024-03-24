@@ -2,7 +2,7 @@ import time
 import threading
 
 class PowerSupplyControler:
-    def __init__(self, output_log_file : str, a0_to_voltage_const : float = 1, a1_to_currenct_const : float = 1.):
+    def __init__(self, output_log_file : str, a0_to_voltage_const : float = 7.63, a1_to_currenct_const : float = 1.):
         self.log_file = open(output_log_file, "w")
         self.a0_to_voltage_const  = a0_to_voltage_const
         self.a1_to_currenct_const = a1_to_currenct_const
