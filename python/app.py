@@ -12,14 +12,15 @@ main_dir = os.path.dirname(this_file_path)
 main_dir = os.path.dirname(main_dir)
 path.append(main_dir + "/bin/")
 
-from PowerSupplyModule import PowerSupplyControlerWrapper
+#from PowerSupplyModule import PowerSupplyControlerWrapper
+from PowerSupplyControler import PowerSupplyControler
 from DataCSVReader import DataCSVReader
 import time, datetime
 
 time_string = datetime.datetime.fromtimestamp(int(time.time())).strftime('%Y-%m-%d_%H:%M:%S')
 log_address = "logs/log_" + time_string + ".txt"
 
-power_supply = PowerSupplyControlerWrapper(log_address)
+power_supply = PowerSupplyControler(log_address)
 power_supply.start_measurement(100,1000)
 
 app = Bottle()

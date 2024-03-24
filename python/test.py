@@ -1,31 +1,15 @@
 from sys import path
+import time
+import datetime
 
-path.append("bin/")
 
-from PowerSupplyModule import PowerSupplyControlerWrapper
-from time import sleep
+from PowerSupplyControler import PowerSupplyControler
 
-ps = PowerSupplyControlerWrapper("log.txt")
-ps.start_measurement(100,1000)
+time_string = datetime.datetime.fromtimestamp(int(time.time())).strftime('%Y-%m-%d_%H:%M:%S')
+log_address = "logs/log_" + time_string + ".txt"
 
-sleep(5)
-ps.stop_measurement()
-ps.start_measurement(100,1000)
-sleep(5)
+power_supply = PowerSupplyControler(log_address)
+power_supply.start_measurement(100,1000)
 
-ps.freeze_data()
-times = ps.get_times()
-voltages = ps.get_voltages()
-currents = ps.get_currents()
-
-for i in range(len(times)):
-    print(times[i], voltages[i], currents[i])
-sleep(5)
-print("10 seconds later")
-ps.freeze_data()
-times = ps.get_times()
-voltages = ps.get_voltages()
-currents = ps.get_currents()
-
-for i in range(len(times)):
-    print(times[i], voltages[i], currents[i])
+time.sleep(10)
+power_supply.stop_measurement()

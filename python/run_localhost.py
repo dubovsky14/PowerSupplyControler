@@ -14,5 +14,5 @@ if __name__ == "__main__":
     application.run()
 
 # run as:
-# uwsgi --http-socket :9090 --plugin python3 --wsgi-file python/run_localhost.py --master
-# access the gui in browser at address: localhost:9090
+# uwsgi --http-socket :9000 --plugin python3 --wsgi-file python/run_localhost.py --enable-threads --master
+# access the gui in browser at address: localhost:9000
