@@ -1,4 +1,4 @@
-
+from time import sleep
 class DataCSVReader:
     def __init__(self, filename):
         self.filename = filename
@@ -19,6 +19,7 @@ class DataCSVReader:
         try:
             return self._read_data()
         except Exception as e:
+            sleep(0.5)
             return self.get_data()
 
     def calculate_Ah(self, currents : list[float], times : list[int]) -> float:
