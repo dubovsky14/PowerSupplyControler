@@ -1,2 +1,4 @@
 bottle
 uwsgi
+RPi.GPIO
+adafruit-circuitpython-ads1x15e

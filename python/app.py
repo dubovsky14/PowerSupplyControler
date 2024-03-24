@@ -31,13 +31,9 @@ def show_index():
     csv_reader = DataCSVReader(log_address)
     data_times, data_voltages, data_currents = csv_reader.get_data()
 
-    print("data_times")
-    for i in range(len(data_times)):
-        print(data_times[i], data_voltages[i], data_currents[i])
     time0 = data_times[0] if len(data_times) > 0 else 0
     times_s = [int((x - time0)/1000) for x in data_times]
     Ah = csv_reader.calculate_Ah(data_currents, data_times)
-    print("Time0: ", time0)
     context =   {
                     "measurement_start" : datetime.datetime.fromtimestamp(int(time0/1000)).strftime('%Y-%m-%d %H:%M:%S'),
                     "times" : times_s,
